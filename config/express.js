@@ -33,5 +33,5 @@ module.exports = function (app) {
 
   app.use(compression());
   app.use(bodyParser.json({ limit: '1mb' }));
-  app.use(express.static(path.join(__dirname, '..', 'dist')));
+  app.use(express.static(path.join(__dirname, '..', 'ui')));
 };
