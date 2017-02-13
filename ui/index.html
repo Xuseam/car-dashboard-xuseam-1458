@@ -16,8 +16,8 @@
          WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
          See the License for the specific language governing permissions and
          limitations under the License.">
-    <meta name="description" content="Watson Conversation Service Car Dashboard Sample Application">
-    <title>Watson Conversation Service Car Dashboard Sample Application</title>
+    <meta name="description" content="Smart AP Sample Application">
+    <title>Smart AP Sample Sample Application</title>
     <!-- build:css css/main.min.css -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/tooltip-dialogs.css">
@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="css/weather.css">
     <link rel="stylesheet" type="text/css" href="css/font.css">
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/watson-react-components.min.css"> -->
     <!-- endbuild -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="ct" content="vPWQz9kc-2sDXDdB6m_K5RLm_mwStA0c3cyo">
@@ -38,6 +39,22 @@
     <!--The main car dashboard SVG-->
     <div id="svg_wrapper">
         <div id="output-audio" class="audio-on" onclick="TTSModule.toggle()" value="ON"></div>
+        <select id="model" class="base-select" >
+            <!-- <option value="fr-FR_BroadbandModel">French broadband model (16KHz)</option>
+            <option value="zh-CN_NarrowbandModel">Mandarin narrowband model (8KHz)</option>
+            <option value="pt-BR_BroadbandModel">Brazilian Portuguese broadband model (16KHz)</option>
+            <option value="pt-BR_NarrowbandModel">Brazilian Portuguese narrowband model (8KHz)</option> -->
+            <option value="ja-JP_BroadbandModel">Japanese broadband model (16KHz)</option>
+            <option value="ja-JP_NarrowbandModel">Japanese narrowband model (8KHz)</option>
+            <!-- <option value="zh-CN_BroadbandModel">Mandarin broadband model (16KHz)</option>
+            <option value="ar-AR_BroadbandModel">Modern Standard Arabic broadband model (16KHz)</option>
+            <option value="es-ES_BroadbandModel">Spanish broadband model (16KHz)</option>
+            <option value="es-ES_NarrowbandModel">Spanish narrowband model (8KHz)</option>
+            <option value="en-UK_BroadbandModel">UK English broadband model (16KHz)</option>
+            <option value="en-UK_NarrowbandModel">UK English narrowband model (8KHz)</option>
+            <option value="en-US_BroadbandModel">US English broadband model (16KHz)</option>
+            <option value="en-US_NarrowbandModel">US English narrowband model (8KHz)</option> -->
+        </select>
         <button id="help" class="tooltip-dialog-btn" onclick="Sidebar.toggle()">What can I ask?</button>
         <div id="svg_size">
             <svg id="svg_canvas" viewBox="0 0 1024 704" version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -50,7 +67,7 @@
                 </div>
 
                 <label for="user-input" class="input-outline responsive-column">
-                  <input id="user-input" type="text" placeholder="Type something, e.g. “Turn the headlights on”">
+                  <input id="user-input" type="text" placeholder="入力してください, 例えば「電源を入れてください」">
                 </label>
             </div>
         </div>
@@ -62,6 +79,7 @@
             <p class="pre-bar">I’m trained on these topics:</p>
             <ul id="suggestion-list"></ul>
         </div>
+        <div id="api-results-scroll-wrapper"><div id="api-results"></div></div>
     </div>
     <script>
         // For cloaking. Done in JS for the case of disabled JS (i.e. even though not much will work, something will be displayed.)
@@ -70,6 +88,7 @@
     <!-- build:js vendor.min.js -->
     <script src="js/libs/snap.svg.js"></script>
     <script src="./../node_modules/whatwg-fetch/fetch.js"></script>
+    <!--<script src="js/fetch.js"></script>-->
     <!-- endbuild -->
     <!-- build:js dashboard.min.js -->
     <script src="js/common.js"></script>

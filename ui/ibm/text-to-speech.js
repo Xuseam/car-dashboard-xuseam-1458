@@ -77,12 +77,13 @@ var TTSModule = (function() {
             }
             audio = WatsonSpeech.TextToSpeech.synthesize({
               text: payload.text, // Output text/response
-              voice: 'en-US_MichaelVoice', // Default Watson voice
+              voice: 'ja-JP_EmiVoice', // Default Watson voice
               autoPlay: true, // Automatically plays audio
               token: token
             });
             // When the audio stops playing
             audio.onended = function() {
+              Common.displayRawMessage({type: 'TTS', close: true, message: payload.text})
               allowSTT(payload); // Check if user wants to use STT
             };
           } else {

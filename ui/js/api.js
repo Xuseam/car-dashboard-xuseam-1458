@@ -59,6 +59,7 @@ var Api = (function() {
       data.context = context;
     }
     Api.setUserPayload(data);
+    Common.displayRawMessage({type: 'Conversation', sent: true, json: data});
     var http = new XMLHttpRequest();
     http.open('POST', messageEndpoint, true);
     http.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -67,6 +68,7 @@ var Api = (function() {
         var response = JSON.parse(http.responseText);
         context = response.context;
         Api.setWatsonPayload(response);
+        Common.displayRawMessage({type: 'Conversation', sent: false, json: response});
       } else {
         Api.setWatsonPayload({output: {text: [
           'The service may be down at the moment; please check' +

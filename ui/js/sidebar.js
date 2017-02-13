@@ -28,14 +28,14 @@ var Sidebar = (function() {
   };
 
   var suggestions = [
-    'Turn on the headlights',
-    'Shut off my lights',
-    'Play some music',
-    'When will the rain end?',
-    'What’s my ETA?',
-    'Show me what’s nearby',
-    'Find a gas station',
-    'Turn my radio up'
+    '電源を入れてください',
+    '25度で電源を入れてください',
+    '電源切って',
+    '18時に25度で予約して',
+    '18時に電源切って',
+    '25度に変更したい',
+    '風量強めで設定して',
+    '風向下向きで設定して'
   ];
 
 

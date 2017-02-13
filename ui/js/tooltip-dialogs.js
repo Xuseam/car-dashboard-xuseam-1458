@@ -41,7 +41,7 @@ var TooltipDialogs = (function() {
     dialogId: 'welcome-tooltip-dialog',
     // text of the dialog box
     text: 'Hi! I’m Watson. This is a sample application to see how I work. \n\n'
-      + ' For this app, imagine you’re driving and I’m your co-pilot, here to help however I can.',
+      + ' For this app, imagine you’re controling your air conditioner with voice.',
     // id of an element to display while this dialog box is active
     showId: null
   }, {

@@ -1,16 +1,16 @@
 ---
 declared-services:
   conversation-service:
-    label: conversation
+    label: Conversation-7u
     plan: free
   speech-to-text-service:
-    label: speech_to_text
+    label: Speech To Text-gw
     plan: standard
   text-to-speech-service:
-    label: text_to_speech
+    label: Text To Speech-zv
     plan: standard
 applications:
-- name: car-dashboard
+- name: smartap-demo
   command: npm start
   path: .
   memory: 512M

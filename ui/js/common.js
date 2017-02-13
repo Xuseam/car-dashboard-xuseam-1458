@@ -43,7 +43,8 @@ var Common = (function() {
     fadeToggle: fadeToggle,
     addClass: addClass,
     removeClass: removeClass,
-    toggleClass: toggleClass
+    toggleClass: toggleClass,
+    displayRawMessage: displayRawMessage
   };
 
   // Take in JSON object and build a DOM element out of it
@@ -237,5 +238,52 @@ var Common = (function() {
     } else {
       ieSvgAddClass(element, clazz, true);
     }
+  }
+
+  //functions to handle raw json data between client and watson api
+  function displayRawMessage(msg) {
+      if (!msg) {
+          return null; //(<div key={`raw-${i}`} />);
+      }
+      var element = msg.type + ' ';
+      if (msg.type === 'STT' || msg.type === 'Conversation') {
+          msg.sent === true ? element += 'Sent: ' : ' '
+          msg.sent === false ? element += 'Received: ' : ''
+          msg.sent && msg.binary ? element += 'Audio data (ongoing...)' : ''
+          msg.close ? element += 'Connection closed:' + msg.code + msg.message || '' : ''
+      }
+      if (msg.type === 'TTS') {
+          msg.close ? element += 'audio played:' + msg.message || '' : ''
+      }
+      var messageJson = {
+        // <div class='user / watson'>
+          'tagName': 'div',
+          'classNames': ['result-wrapper', msg.type],
+          'html': element
+      };
+      if (msg.json) {
+          var json = JSON.stringify(msg.json);
+          var str = (json.length <= 78) ? json : json.substr(0, 14) + ' ...' + json.substr(-60).replace(/,/g, ', '); // space after commas to help browsers decide where breakpoints should go on small screens     
+          messageJson.children = [{
+              // <a class='user-message / watson-message'>
+              'tagName': 'a',
+              'attributes': [{
+                  name: 'onclick',
+                  value: 'window.open("data:text/json,' + encodeURIComponent(JSON.stringify(msg.json, null, 4)) +
+                      '", "_blank")'
+              }, { name: 'href', value: '#' }],
+              // 'html': JSON.stringify(msg.json, null, 4)
+              'html': str
+          }];
+      }
+
+
+    var logDiv = Common.buildDomElement(messageJson);
+    var apiResultsElement = document.getElementById('api-results');
+    apiResultsElement.appendChild(logDiv);
+
+    document.getElementById('api-results-scroll-wrapper').style.display = '';
+    var results = document.getElementById('api-results').getElementsByClassName('result-wrapper');
+    document.getElementById('api-results').scrollTop = results[results.length - 1].offsetTop;
   }
 }());

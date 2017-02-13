@@ -73,7 +73,7 @@ var Animations = (function() {
     cloud6: '#cloud6'
   };
   var svgUrls = {
-    background: './images/background.svg',
+    background: './images/background2.svg',
     dashboard: './images/dashboard.svg',
     sky: './images/sky.svg'
   };
@@ -120,26 +120,26 @@ var Animations = (function() {
   function loadDashboard() {
     // Create SVG group to hold the SVG loaded from file
     var dash = snapSvgCanvas.group();
-    Snap.load(svgUrls.dashboard, function(svgFragment) {
+    Snap.load(svgUrls.background, function(svgFragment) {
       svgFragment.select('title').remove();   // Remove the tooltip from the SVG
       // Append the loaded fragment from file to the SVG group
       dash.append(svgFragment);
 
-      animateNeedles();
-      var rightWiper = Snap.select(idSelectors.rightWiper);
-      var leftWiper = Snap.select(idSelectors.leftWiper);
+      // animateNeedles();
+      // var rightWiper = Snap.select(idSelectors.rightWiper);
+      // var leftWiper = Snap.select(idSelectors.leftWiper);
 
       // Remember the initial positioning of wipers
-      rightWiper.bbox = rightWiper.getBBox();
+      /*rightWiper.bbox = rightWiper.getBBox();
       leftWiper.bbox = leftWiper.getBBox();
 
       state.wipers = {
         right: rightWiper,
         left: leftWiper
-      };
+      };*/
 
       // Draw the Watson log on the panel and set up for animations
-      Panel.init();
+      // Panel.init();
 
       initialized = true;
     });
@@ -155,15 +155,15 @@ var Animations = (function() {
       background.append(svgFragment);
 
       // Begin animating the elements
-      animateRoad();
-      animateTrees();
-      animateClouds();
+      // animateRoad();
+      // animateTrees();
+      // animateClouds();
 
       // Create the rain drops without displaying them
-      initiateRaining();
+      // initiateRaining();
 
       // Setup a loop to call toggle rain every 30s
-      (function rainLoop() {
+      /*(function rainLoop() {
         setTimeout(function() {
           toggleRain();
           setTimeout(function() {
@@ -171,7 +171,7 @@ var Animations = (function() {
             rainLoop();
           }, 60000);
         }, 30000);
-      })();
+      })();*/
 
       // Begin loading the dashboard SVGs
       loadDashboard();
@@ -186,7 +186,7 @@ var Animations = (function() {
       svgFragment.select('title').remove();   // Remove the tooltip from the SVG
 
       // Append the loaded fragment from file to the SVG group
-      sky.append(svgFragment);
+      // sky.append(svgFragment);
 
       // Load the background
       loadBackground();
