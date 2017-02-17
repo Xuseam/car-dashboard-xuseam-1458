@@ -14,8 +14,101 @@
  * limitations under the License.
  */
 
-const express = require('express');
-const app = express();
+// Add IBM_ZhangJing Weather Company Start
+// const express = require('express');
+// const app = express();
+var express = require('express');
+var app = express();
+var request = require('request');
+var cfenv = require('cfenv');
+
+//Security - helmet
+var helmet = require('helmet');
+var ninetyDaysInMilliseconds = 7776000000;
+
+
+    app.use(express.static(__dirname + '/public'));
+    // set the HTTP Strict Transport Security (HSTS) header for 90 days
+    app.use(helmet.hsts({
+        maxAge: ninetyDaysInMilliseconds,
+        includeSubdomains: true,
+        force: true
+    }));
+    // Prevent Cross-site scripting (XSS) attacks
+    app.use(helmet.xssFilter());
+
+// get the app environment from Cloud Foundry
+var appEnv = cfenv.getAppEnv();
+var weather_host = "https://3e08f2fa-d2b1-43a2-a696-7f7787176707:KEhiaTahFO@twcservice.mybluemix.net";
+// var weather_host = appEnv.services["weatherinsights"]
+//     ? appEnv.services["weatherinsights"][0].credentials.url // Weather credentials passed in
+//     : ""; // or copy your credentials url here for standalone
+
+function weatherAPI(path, qs, done) {
+    var url = weather_host + path;
+    console.log(url, qs);
+    request({
+        url: url,
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "Accept": "application/json"
+        },
+        qs: qs
+    }, function(err, req, data) {
+        if (err) {
+            done(err);
+        } else {
+            if (req.statusCode >= 200 && req.statusCode < 400) {
+                try {
+                    done(null, JSON.parse(data));
+                } catch(e) {
+                    console.log(e);
+                    done(e);
+                }
+            } else {
+                console.log(err);
+                done({ message: req.statusCode, data: data });
+            }
+        }
+    });
+}
+
+app.get('/api/forecast/daily', function(req, res) {
+    var geocode = (req.query.geocode || "45.43,-75.68").split(",");
+    weatherAPI("/api/weather/v1/geocode/" + geocode[0] + "/" + geocode[1] + "/forecast/daily/10day.json", {
+        units: req.query.units || "m",
+        language: req.query.language || "en"
+    }, function(err, result) {
+        if (err) {
+            console.log(err);
+            res.send(err).status(400);
+        } else {
+            console.log("10 days Forecast");
+            res.json(result);
+        }
+    });
+});
+
+app.get('/api/forecast/hourly', function(req, res) {
+    var geocode = (req.query.geocode || "45.43,-75.68").split(",");
+    weatherAPI("/api/weather/v1/geocode/" + geocode[0] + "/" + geocode[1] + "/observations.json", {
+        units: req.query.units || "m",
+        language: req.query.language || "en"
+    }, function(err, result) {
+        if (err) {
+            res.send(err).status(400);
+        } else {
+            console.log("24 hours Forecast");
+            res.json(result);
+        }
+    });
+});
+
+app.listen(appEnv.port, appEnv.bind, function() {
+    console.log("server starting on " + appEnv.url);
+});
+// Add IBM_ZhangJing Weather Company End
 
 // Bootstrap application settings
 require('./config/express')(app);

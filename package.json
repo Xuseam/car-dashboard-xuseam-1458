@@ -38,7 +38,9 @@
     "vcap_services": "^0.2.0",
     "watson-developer-cloud": "^2.14.3",
     "watson-react-components": "^0.5.8",
-    "whatwg-fetch": "^2.0.1"
+    "whatwg-fetch": "^2.0.1",
+    "cfenv": "^1.0.3",
+    "request": "^2.51.0"
   },
   "devDependencies": {
     "eslint": "^3.12.2",

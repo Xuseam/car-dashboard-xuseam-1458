@@ -19,7 +19,16 @@
     background: white;
     position: relative;
 }
+/*Add IBM_ZhangJing Weather Company Start*/
+#input-weather-holder {
+    top: 20%;
+    left: 40%;
+    height: 10rem;
+    width: 5rem;
+    position: relative;
 
+}
+/*Add IBM_ZhangJing Weather Company End*/
 #input-mic-holder {
     height: 3rem;
     width: 3rem;
