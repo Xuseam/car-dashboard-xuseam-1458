@@ -218,6 +218,44 @@ input#user-input:-moz-placeholder {
     overflow-y: auto;
 }
 
+#displayStatus {
+    position: absolute;
+    /*border: 1px solid black;*/
+    top:     5.625rem;
+    padding-top: 0.3125rem;
+    margin-left: 30rem;
+    border-top-left-radius: 0.625rem;
+    border-top-right-radius: 0.625rem;
+    background: rgba(0,0,0,0.3);
+    width: 50%;
+    /*color: white;*/
+}
+
+.box {
+    margin-top: 0.5em;
+    border: 1px solid black;
+}
+
+.field {
+    display: table;
+    margin-bottom: 1em;
+    border-bottom: 1px dashed black;
+}
+
+.label,.value{
+    display: table-cell;
+}
+
+.label {
+    min-width: 100px;
+}
+
+.value {
+    width: 60px;
+    vertical-align: bottom;
+    color: yellow;
+}
+
 .user, .watson {
     display: block;
     overflow: visible;

@@ -61,6 +61,50 @@
         </div>
         <div class="chatUi">
             <div id="chat-scroll-wrapper"><div id="chat-flow"></div></div>
+
+            <div id="displayStatus">
+                <div style="border-bottom: 1px solid black"><b>状態表示</b></div>
+                    <div class="field">
+                        <div class="label">状 態：</div>
+                        <div class="value" id="power"></div>
+                    </div>
+                    <div class="box">
+                        <div class="field">
+                            <div class="label">予約状況：</div>
+                            <div class="value" id="reserve"></div>
+                            <div class="label">モード：</div>
+                            <div class="value" id="reserve_mode"></div>
+                            <div class="label">時 間：</div>
+                            <div class="value" id="reserve_time"></div>
+                        </div>
+                        <div class="field">   
+                            <div class="label">温 度：</div>
+                            <div class="value" id="reserve_temperature"></div>
+                            <div class="label">風 量：</div>
+                            <div class="value" id="reserve_volume_level"></div>
+                            <div class="label">風 向：</div>
+                            <div class="value" id="reserve_direction"></div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="field">
+                            <div class="label">運転モード：</div>
+                            <div class="value" id="running_mode"></div>
+                            <div class="label">設定温度：</div>
+                            <div class="value" id="running_temperature"></div>
+                            <div class="label">風 量：</div>
+                            <div class="value" id="running_volume_level"></div>
+                            <div class="label">風 向：</div>
+                            <div class="value" id="running_direction"></div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">天 気：</div>
+                        <div class="value" id="now-Weather"></div>
+                        <div class="label">外気温：</div>
+                        <div class="value" id="now-Temperature"></div>
+                    </div>
+            </div>
             <div id="input-wrapper" class="responsive-columns-wrapper">
                 <div id="input-mic-holder">
                     <div id="input-mic" class="inactive-mic" onclick="STTModule.micON()"></div>
@@ -96,7 +140,7 @@
     <script src="js/sidebar.js"></script>
     <script src="js/tooltip-dialogs.js"></script>
     <script src="js/animations.js"></script>
-    <script src="js/panel.js"></script>
+    <script src="js/status.js"></script>
     <script src="js/conversation.js"></script>
     <script src="js/conversationResponse.js"></script>
     <script src="js/global.js"></script>
