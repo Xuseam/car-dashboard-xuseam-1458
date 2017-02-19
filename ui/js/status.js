@@ -1,4 +1,5 @@
 var Status = (function() {
+	'use strict';
     var ids = {
         power: 'power',
         reserve: 'reserve',

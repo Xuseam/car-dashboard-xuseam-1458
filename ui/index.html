@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="css/weather.css">
     <link rel="stylesheet" type="text/css" href="css/font.css">
     <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/status.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/watson-react-components.min.css"> -->
     <!-- endbuild -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +40,7 @@
     <!--The main car dashboard SVG-->
     <div id="svg_wrapper">
         <div id="output-audio" class="audio-on" onclick="TTSModule.toggle()" value="ON"></div>
-        <select id="model" class="base-select" >
+        <select id="model" class="base--select" >
             <!-- <option value="fr-FR_BroadbandModel">French broadband model (16KHz)</option>
             <option value="zh-CN_NarrowbandModel">Mandarin narrowband model (8KHz)</option>
             <option value="pt-BR_BroadbandModel">Brazilian Portuguese broadband model (16KHz)</option>
@@ -100,10 +101,48 @@
                     </div>
                     <div class="field">
                         <div class="label">天 気：</div>
-                        <div class="value" id="now-Weather"></div>
+                        <div class="value" id="now-weather"></div>
                         <div class="label">外気温：</div>
-                        <div class="value" id="now-Temperature"></div>
+                        <div class="value" id="now-temperature"></div>
                     </div>
+            </div>
+            <div id="favorite">
+                <div style="border-bottom: 1px solid black"><b>外部情報設定</b></div>
+                <form>
+                    <div class="field">
+                        <div class="label2">日時：</div>
+                        <div class="value-favorite" id="now-year"></div>
+                        <div class="label1">年</div>
+                        <div class="value-favorite" id="now-month"></div>
+                        <div class="label1">月</div>
+                        <div class="value-favorite" id="now-day"></div>
+                        <div class="label1">日</div>
+                        <div class="value-favorite" id="now-time"></div>
+                    </div>
+                    <div class="field">
+                        <div class="label2">Location：</div>
+
+                        <select id="location" class="base--select">
+                            <option value="34.73,135.58">大阪府門真市</option>
+                            <option value="26.33,127.80">沖縄県沖縄市</option>
+                            <option value="35.60,139.73">東京都品川区</option>
+                            <option value="43.06,141.35">北海道札幌市</option>
+                        </select>
+                    </div>
+                    <div class="box">
+                        <div>好みの設定：</div>
+                        <div style="display: inline">
+                            <div class="label2">温度：</div>
+                            <input id="favorite-temperature" type="text" class="input-value">
+                            <div class="label2">度　</div>
+                            <div class="label2">風量</div>
+                            <input id="favorite-volume_level" type="text" class="input-value">
+                            <div class="label2">風向</div>
+                            <input id="favorite-direction" type="text" class="input-value">
+                        </div>
+                    </div>
+                    <button class="base--button" onclick="Favorite.update()">情報更新</button>
+                </form>
             </div>
             <div id="input-wrapper" class="responsive-columns-wrapper">
                 <div id="input-mic-holder">
@@ -143,6 +182,7 @@
     <script src="js/status.js"></script>
     <script src="js/conversation.js"></script>
     <script src="js/conversationResponse.js"></script>
+    <script src="js/favorite.js"></script>
     <script src="js/global.js"></script>
     <script src="js/ui_tests/tests.js"></script>
     <!-- endbuild -->

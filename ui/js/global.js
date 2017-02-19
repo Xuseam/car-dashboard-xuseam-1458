@@ -20,6 +20,7 @@
 
 (function() {
   TooltipDialogs.init();
+  Favorite.init();
   Conversation.init();
   ConversationResponse.init();
   Sidebar.init();

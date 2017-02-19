@@ -75,33 +75,6 @@
     background-size: 100%;
 }
 
-#model {
-    position: absolute;
-    z-index: 10;
-    left: 6rem;
-    top: 1rem;
-    width: 30%;
-    padding: 0.6em 1em;
-    font-size: 1em;
-    font-weight: 300;
-    border: 2px solid #464646;
-    background-color: #fff;
-    line-height: normal;
-    display: block; 
-}
-
-select,
-.base--select {
-  border-radius: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww%2Ew3%2Eorg%2F2000%2Fsvg%22%20viewbox%3D%220%200%2012%2012%20true%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20fill%3D%22%23464646%22%20points%3D%220%2C0%205%2E85%2C12%2012%2C0%20%22%2F%3E%3C%2Fsvg%3E");
-  background-size: 1em 1em;
-  background-repeat: no-repeat;
-  background-position: calc(100% - .3em) 1em; }
-
-
 /*
 #input-mic.active-mic {
     animation: mic-pulse 1s;
@@ -218,43 +191,11 @@ input#user-input:-moz-placeholder {
     overflow-y: auto;
 }
 
-#displayStatus {
-    position: absolute;
-    /*border: 1px solid black;*/
-    top:     5.625rem;
-    padding-top: 0.3125rem;
-    margin-left: 30rem;
-    border-top-left-radius: 0.625rem;
-    border-top-right-radius: 0.625rem;
-    background: rgba(0,0,0,0.3);
-    width: 50%;
-    /*color: white;*/
+.input-value {
+    display: inline-block;
+    width: 15%;
 }
 
-.box {
-    margin-top: 0.5em;
-    border: 1px solid black;
-}
-
-.field {
-    display: table;
-    margin-bottom: 1em;
-    border-bottom: 1px dashed black;
-}
-
-.label,.value{
-    display: table-cell;
-}
-
-.label {
-    min-width: 100px;
-}
-
-.value {
-    width: 60px;
-    vertical-align: bottom;
-    color: yellow;
-}
 
 .user, .watson {
     display: block;
