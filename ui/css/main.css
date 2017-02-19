@@ -158,3 +158,54 @@ body {
         fill: green;
     }
 }
+
+button,
+.base--button {
+  padding: 0.25em 2em;
+  color: #9855d4;
+  font-weight: 500;
+  background-color: white;
+  border: 2px solid #9855d4;
+  border-radius: 10rem;
+  transition: 0.2s;
+  display: inline-block; }
+button:hover,
+.base--button:hover, button:focus,
+.base--button:focus {
+background-color: white;
+border-color: #bd92e3;
+color: #bd92e3; }
+button:active,
+.base--button:active {
+transition: 0s;
+transform: translateY(2px); }
+
+#model, #location {
+    padding: 0.6em 1em;
+    font-size: 1em;
+    font-weight: 300;
+    border: 2px solid #464646;
+    background-color: #fff;
+    line-height: normal;
+    display: block; 
+}
+
+#model {
+    position: absolute;
+    z-index: 10;
+    left: 6rem;
+    top: 1rem;
+    width: 30%;
+}
+
+select,
+.base--select {
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww%2Ew3%2Eorg%2F2000%2Fsvg%22%20viewbox%3D%220%200%2012%2012%20true%22%20xml%3Aspace%3D%22preserve%22%3E%3Cpolygon%20fill%3D%22%23464646%22%20points%3D%220%2C0%205%2E85%2C12%2012%2C0%20%22%2F%3E%3C%2Fsvg%3E");
+  background-size: 1em 1em;
+  background-repeat: no-repeat;
+  background-position: calc(100% - .3em) 1em; }
+

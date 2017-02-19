@@ -22,6 +22,7 @@
 var ConversationResponse = (function () {
   'use strict';
   var responseFunctions;
+  var isCancelTrigged = false;
 
   return {
     init: init,
@@ -34,66 +35,41 @@ var ConversationResponse = (function () {
   }
 
   function setupResponseFunctions() {
-    responseFunctions = {
-      turn_on: {
-        appliance: {
-          AC: function () { Panel.ac('lo'); },
-          fan: function () { Panel.ac('lo'); },
-          heater: function () { Panel.heat('lo'); },
-          lights: function () { Animations.lightsOn(); },
-          wipers: function () { Animations.wipersOn('lo'); }
-        },
-        genre: function (value) { Panel.playMusic(value); }
-      },
-      turn_off: {
-        appliance: {
-          lights: function () { Animations.lightsOff(); },
-          wipers: function () { Animations.wipersOff(); }
-        }
-      },
-      turn_up: {
-        appliance: {
-          AC: function () { Panel.ac('hi'); },
-          fan: function () { Panel.ac('hi'); },
-          heater: function () { Panel.heat('hi'); },
-          music: function () { Panel.playMusic('general'); },
-          wipers: function () { Animations.wipersOn('hi'); }
-        },
-        genre: function (value) { Panel.playMusic(value); }
-      },
-      turn_down: {
-        appliance: {
-          AC: function () { Panel.ac('lo'); },
-          fan: function () { Panel.ac('lo'); },
-          heater: function () { Panel.heat('lo'); },
-          music: function () { Panel.playMusic('general'); },
-          wipers: function () { Animations.wipersOn('lo'); }
-        },
-        genre: function (value) { Panel.playMusic(value); }
-      },
-      locate_amenity: {
-        amenity: {
-          gas: function () { Panel.mapGas(); },
-          restaurant: function () { Panel.mapFoodCuisine(); },
-          restroom: function () { Panel.mapRestrooms(); }
-        },
-        option: function (choice) { Panel.mapNavigation(choice); },
-        cuisine: function () { Panel.mapFoodNumbers(); },
-        func: function () { Panel.mapGeneral(); }
-      },
-      off_topic: {
-        amenity: {
-          gas: function () { Panel.mapGas(); },
-          restaurant: function () { Panel.mapFoodCuisine(); },
-          restroom: function () { Panel.mapRestrooms(); }
-        },
-        cuisine: function () { Panel.mapFoodNumbers(); },
-        genre: function (value) { Panel.playMusic(value); }
-      },
-      traffic_update: {
-        genre: function (value) { Panel.playMusic(value); }
-      }
-    };
+      responseFunctions = {
+          turn_on: {
+              mode: function(value, context) { Status.mode(value, context); },
+              time: function(value, context) { Status.time(value, context); },
+              temperature: function(value, context) { Status.temperature(value, context) },
+              direction: function(value, context) { Status.direction(value, context) },
+              volume_level: function(value, context) { Status.volume_level(value, context) },
+              func: function() { Status.turn_on(); }
+          },
+
+          turn_off: function() { Status.init();　Status.turn_off(); },
+          reserve: {
+              mode: function(value, context) { Status.mode(value, context); },
+              time: function(value, context) { Status.time(value, context); },
+              temperature: function(value, context) { Status.temperature(value, context) },
+              direction: function(value, context) { Status.direction(value, context) },
+              volume_level: function(value, context) { Status.volume_level(value, context) },
+              func: function() { Status.turn_on(); Status.reserve(); }
+          },
+
+          reserve_off: function() { Status.reserve_off(); },
+          control: {
+              mode: function(value, context) { Status.mode(value, context); },
+              time: function(value, context) { Status.time(value, context); },
+              temperature: function(value, context) { Status.temperature(value, context) },
+              direction: function(value, context) { Status.direction(value, context) },
+              volume_level: function(value, context) { Status.volume_level(value, context) },
+              negative: function() {isCancelTrigged = false;},
+              positive: function() {
+                isCancelTrigged = false;
+                Status.init();
+              }
+          },
+          cancel: function() {isCancelTrigged = true;}
+      };
   }
 
   // Create a callback when a new Watson response is received to handle Watson's response
@@ -120,68 +96,39 @@ var ConversationResponse = (function () {
 
       var primaryIntent = data.intents[0];
       if (primaryIntent) {
-        handleBasicCase(primaryIntent, data.entities);
+        handleBasicCase(primaryIntent, data.entities, data.context);
       }
     }
   }
 
   // Handles the case where there is valid intent and entities
-  function handleBasicCase(primaryIntent, entities) {
-    var genreFound = null;
-    // If multiple entities appear (with the exception of music),
-    // do not perform any actions
-    if (entities.length > 1) {
-      var invalidMultipleEntities = true;
-      switch (primaryIntent.intent) {
-      case 'turn_on':
-      case 'turn_off':
-      case 'turn_up':
-      case 'turn_down':
-        entities.forEach(function (currentEntity) {
-          var entityType = currentEntity.entity;
-          if (entityType === 'genre') {
-            invalidMultipleEntities = false;
-            genreFound = currentEntity;
-          }
-        });
-        break;
-      default:
-        invalidMultipleEntities = false;
-        break;
-      }
-    }
+  function handleBasicCase(primaryIntent, entities, context) {
 
-    // Otherwise, just take the first one (or the genre if one was found) and
-    // look for the correct function to run
-    if  (!invalidMultipleEntities) {
-      var primaryEntity = (genreFound || entities[0]);
-      callResponseFunction(primaryIntent, primaryEntity);
-    }
+      switch (primaryIntent.intent) {
+          case 'cancel':
+              break;
+          default:
+              break;
+      }
+
+      callResponseFunction(primaryIntent, entities, context);
   }
 
   // Calls the appropriate response function based on the given intent and entity returned by Watson
-  function callResponseFunction(primaryIntent, primaryEntity) {
-    var intent = responseFunctions[primaryIntent.intent];
-    if (typeof intent === 'function') {
-      intent(primaryEntity.entity, primaryEntity.value);
-    } else if (intent) {
-      if (primaryEntity) {
-        var entityType = intent[primaryEntity.entity];
-        if (typeof entityType === 'function') {
-          entityType(primaryEntity.value);
-        } else if (entityType) {
-          var entityValue = entityType[primaryEntity.value];
-          if (typeof entityValue === 'function') {
-            entityValue();
-          } else if (entityValue && typeof entityValue.func === 'function') {
-            entityValue.func();
-          } else if (typeof entityType.func === 'function') {
-            entityType.func();
-          }
-        }
-      } else if (typeof intent.func === 'function') {
-        intent.func();
-      }
-    }
-  }
+ function callResponseFunction(primaryIntent, entities, context) {
+     var intent = responseFunctions[primaryIntent.intent];
+     if (typeof intent === 'function') {
+         intent();
+     } else if (intent) {
+         if (typeof intent.func === 'function') {
+             intent.func();
+         }
+         entities.forEach(function(currentEntity) {
+             var entityType = intent[currentEntity.entity];
+             if (typeof entityType === 'function') {
+                 entityType(currentEntity.value, context);
+             }
+         })
+     }
+ }
 }());
