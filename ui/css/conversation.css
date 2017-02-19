@@ -191,12 +191,6 @@ input#user-input:-moz-placeholder {
     overflow-y: auto;
 }
 
-.input-value {
-    display: inline-block;
-    width: 15%;
-}
-
-
 .user, .watson {
     display: block;
     overflow: visible;
