@@ -19,6 +19,7 @@
 /* global TooltipDialogs: true, Conversation: true, ConversationResponse: true, Sidebar: true, Animations: true, Common: true */
 
 (function() {
+  Log.init();
   TooltipDialogs.init();
   Favorite.init();
   Conversation.init();
